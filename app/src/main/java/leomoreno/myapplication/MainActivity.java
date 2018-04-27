@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
@@ -31,14 +29,6 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -70,25 +60,6 @@ public class MainActivity extends AppCompatActivity {
     //BANNER____FIN
 
 
-    /**
-     * Quiero ahora es meter una imagen de facebook perfil en mi imageview.
-     * Url Image to Bitmap ImageView Android Tutorials
-     * https://www.youtube.com/watch?v=Il3uB5u2pSA
-     * <p>
-     * otra lectura :
-     * https://leandrotemperoni.wordpress.com/2013/02/18/obtener-datos-de-una-pagina-web-en-java/
-     * <p>
-     * <p>
-     * Facebook login with android , get ID user and image profile
-     * https://www.youtube.com/watch?v=WhZuer3lZDc&feature=youtu.be
-     * <p>
-     * <p>
-     * otras lecturas
-     * http://flipandroid.com/cmo-obtener-la-foto-del-perfil-de-facebook-en-facebook-sdk-3-0-android.html
-     * <p>
-     * https://www.xvideos.com/video35514771/holosexual
-     */
-
 
     //____________________________________________________________________________
     @Override
@@ -106,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         FacebookSdk.sdkInitialize(getApplicationContext());
-//        getFacebookKeyHash("si/P3fPe7WNco7BKvbvbP2bgUhU=Eliminar=");
+
         setContentView(R.layout.activity_main);
 
         initializeControls();
@@ -225,13 +196,6 @@ public class MainActivity extends AppCompatActivity {
     }
     //________________________________________________________________
 
-    //________________________________________________________________
-
-    //________________________________________________________________
-
-
-
-
     /**
      * Comprueba si el usuario ha iniciado sesión en Facebook y el
      * token de acceso está activo
@@ -245,45 +209,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //____________________________________________________________________________
-    private void getData(JSONObject object) {
-        try {
-            URL profile_picture = new URL("https://graph.facebook.com/" + object.getString("id") + "/picture=?width=250&height=250");
-
-//            Picasso.with(this).load(profile_picture.toString()).into(imageaVatar);
-            txtEmail.setText(object.getString("email"));
-            txtBirthday.setText(object.getString("birthay"));
-            txtFriends.setText(object.getString("friends: " + object.getJSONObject("friends").getJSONObject("summary").getString("total_count")));
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    //________________________________________________________________________
-    public Bitmap getBitmapFromUrl(String src) {
-        try {
-            URL url = new URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
-
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return null;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
-    //________________________________________________________________________
-
     private void printKeyHash() {
         try {
             PackageInfo info = getPackageManager()
